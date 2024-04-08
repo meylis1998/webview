@@ -9,4 +9,6 @@ class HomeState {
   RxString simCountryCode = ''.obs;
 
   RxString firebaseAnalyticsID = ''.obs;
+
+  RxString messagingToken = ''.obs;
 }

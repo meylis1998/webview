@@ -2,6 +2,7 @@ import 'package:advertising_id/advertising_id.dart';
 import 'package:device_region/device_region.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
@@ -19,6 +20,7 @@ class HomeController extends GetxController {
     await getInstallReferrer();
     await getSimCountryCode();
     await getAnalyticsId();
+    await getMessagingToken();
     update();
   }
 
@@ -62,6 +64,14 @@ class HomeController extends GetxController {
       return state.firebaseAnalyticsID.value = (await analyticsInstance.appInstanceId)!;
     } catch (e) {
       return state.firebaseAnalyticsID.value = 'Failed to get Analytics ID';
+    }
+  }
+
+  Future<String?> getMessagingToken() async {
+    try {
+      return state.messagingToken.value = (await FirebaseMessaging.instance.getToken())!;
+    } catch (e) {
+      return state.messagingToken.value = 'Failed to get Messaging Token';
     }
   }
 

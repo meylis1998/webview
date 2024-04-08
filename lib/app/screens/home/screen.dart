@@ -81,6 +81,19 @@ class HomeScreen extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+                Text(
+                  'Messaging Token:',
+                  style: Get.textTheme.bodyMedium?.copyWith(
+                    fontSize: 20,
+                  ),
+                ),
+                Text(
+                  hc.state.messagingToken.value,
+                  style: Get.textTheme.bodyMedium?.copyWith(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ],
             ),
           ),

@@ -16,6 +16,29 @@ class HomeScreen extends StatelessWidget {
         return Scaffold(
           backgroundColor: Colors.white,
           appBar: AppBar(
+            actions: [
+              IconButton(
+                onPressed: () {
+                  hc.webViewController!.reload();
+                },
+                color: Colors.white,
+                icon: const Icon(Icons.replay_outlined),
+              ),
+              IconButton(
+                onPressed: () {
+                  hc.webViewController!.goBack();
+                },
+                color: Colors.white,
+                icon: const Icon(Icons.arrow_back),
+              ),
+              IconButton(
+                onPressed: () {
+                  hc.webViewController!.goForward();
+                },
+                color: Colors.white,
+                icon: const Icon(Icons.arrow_forward),
+              ),
+            ],
             backgroundColor: Colors.deepPurple,
             title: Text(
               'Webview App',
@@ -141,6 +164,9 @@ class HomeScreen extends StatelessWidget {
                             onProgressChanged: (controller, progress) async {
                               hc.state.progress.value = progress / 100;
                               hc.update();
+                            },
+                            onWebViewCreated: (controller) {
+                              hc.webViewController = controller;
                             },
                             initialSettings: hc.settings,
                           ),

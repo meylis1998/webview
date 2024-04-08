@@ -1,0 +1,89 @@
+import 'package:advertising_id/advertising_id.dart';
+import 'package:device_region/device_region.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:get/get.dart';
+import 'package:install_referrer/install_referrer.dart';
+import 'package:webview/app/screens/home/home.dart';
+
+class HomeController extends GetxController {
+  final GlobalKey webViewKey = GlobalKey();
+  final state = HomeState();
+  @override
+  void onInit() async {
+    super.onInit();
+    await getAdvertisingId();
+    await getInstallReferrer();
+    await getSimCountryCode();
+    await getAnalyticsId();
+    update();
+  }
+
+  InAppWebViewController? webViewController;
+
+  Future<String?> getAdvertisingId() async {
+    try {
+      state.advertisingId.value = (await AdvertisingId.id(true))!;
+      state.isLimitTrackingEnabled.value = (await AdvertisingId.isLimitAdTrackingEnabled)!;
+      state.isLimitTrackingEnabled.value;
+      return state.advertisingId.value;
+    } on PlatformException {
+      state.advertisingId.value = 'Failed to get advertising ID';
+      state.isLimitTrackingEnabled.value = false;
+      return null;
+    }
+  }
+
+  Future<String?> getInstallReferrer() async {
+    try {
+      var referrer = InstallReferrer.referrer;
+
+      return state.installReferrer.value = await referrer.then((value) => value.name);
+    } catch (e) {
+      return state.installReferrer.value = 'Failed to get InstallReferrer';
+    }
+  }
+
+  Future<String?> getSimCountryCode() async {
+    try {
+      return state.simCountryCode.value = (await DeviceRegion.getSIMCountryCode())!;
+    } catch (e) {
+      return state.simCountryCode.value = 'Failed to get SIM CountryCode';
+    }
+  }
+
+  Future<String?> getAnalyticsId() async {
+    try {
+      var firebaseApp = Firebase.app();
+      var analyticsInstance = FirebaseAnalytics.instanceFor(app: firebaseApp);
+      return state.firebaseAnalyticsID.value = (await analyticsInstance.appInstanceId)!;
+    } catch (e) {
+      return state.firebaseAnalyticsID.value = 'Failed to get Analytics ID';
+    }
+  }
+
+  InAppWebViewSettings settings = InAppWebViewSettings(
+    javaScriptEnabled: true,
+    supportZoom: true,
+    transparentBackground: true,
+    javaScriptCanOpenWindowsAutomatically: true,
+    safeBrowsingEnabled: false,
+    allowFileAccess: true,
+    allowFileAccessFromFileURLs: true,
+    sharedCookiesEnabled: true,
+    thirdPartyCookiesEnabled: true,
+    allowContentAccess: true,
+    preferredContentMode: UserPreferredContentMode.MOBILE,
+    allowsLinkPreview: true,
+    mediaPlaybackRequiresUserGesture: true,
+    allowsPictureInPictureMediaPlayback: true,
+    domStorageEnabled: true,
+    allowsInlineMediaPlayback: true,
+    allowsAirPlayForMediaPlayback: true,
+    databaseEnabled: true,
+    supportMultipleWindows: true,
+  );
+}

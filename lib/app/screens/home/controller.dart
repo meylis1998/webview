@@ -16,12 +16,19 @@ class HomeController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
+    state.isLoading.value = true;
     await getAdvertisingId();
     await getInstallReferrer();
     await getSimCountryCode();
     await getAnalyticsId();
-    await getMessagingToken();
+    await getTokenAndSubscribe();
     update();
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
+    state.isLoading.value = false;
   }
 
   InAppWebViewController? webViewController;
@@ -67,8 +74,10 @@ class HomeController extends GetxController {
     }
   }
 
-  Future<String?> getMessagingToken() async {
+  Future<String?> getTokenAndSubscribe() async {
     try {
+      await FirebaseMessaging.instance.subscribeToTopic('news');
+
       return state.messagingToken.value = (await FirebaseMessaging.instance.getToken())!;
     } catch (e) {
       return state.messagingToken.value = 'Failed to get Messaging Token';

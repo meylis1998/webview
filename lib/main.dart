@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get/get.dart';
 import 'package:webview/app/data/api/api.dart';
 import 'package:webview/app/screens/home/screen.dart';
@@ -14,6 +16,7 @@ initAppInitials() async {
   ]);
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await FirebaseMessagingService().initFirebaseMessaging();
+  await InAppWebViewController.setWebContentsDebuggingEnabled(kDebugMode);
 }
 
 Future<void> main() async {

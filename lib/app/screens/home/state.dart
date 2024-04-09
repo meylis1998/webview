@@ -16,4 +16,5 @@ class HomeState {
   RxString firebaseAnalyticsID = ''.obs;
 
   RxString messagingToken = ''.obs;
+  RxBool isSubscribed = false.obs;
 }

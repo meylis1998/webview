@@ -13,6 +13,7 @@ import 'package:webview/app/screens/home/home.dart';
 class HomeController extends GetxController {
   final GlobalKey webViewKey = GlobalKey();
   final state = HomeState();
+
   @override
   void onInit() async {
     super.onInit();
@@ -76,7 +77,12 @@ class HomeController extends GetxController {
 
   Future<String?> getTokenAndSubscribe() async {
     try {
-      await FirebaseMessaging.instance.subscribeToTopic('news');
+      if (!state.isSubscribed.value) {
+        await FirebaseMessaging.instance.subscribeToTopic('news');
+        state.isSubscribed.value = true;
+      }
+
+      debugPrint('token ${await FirebaseMessaging.instance.getToken()}');
 
       return state.messagingToken.value = (await FirebaseMessaging.instance.getToken())!;
     } catch (e) {

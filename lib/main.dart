@@ -8,7 +8,7 @@ import 'package:webview/app/data/api/api.dart';
 import 'package:webview/app/screens/home/screen.dart';
 import 'package:webview/firebase_options.dart';
 
-initAppInitials() async {
+Future<void> initAppInitials() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,

@@ -1,4 +1,5 @@
 import 'package:advertising_id/advertising_id.dart';
+import 'package:android_play_install_referrer/android_play_install_referrer.dart';
 import 'package:device_region/device_region.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -7,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get/get.dart';
-import 'package:install_referrer/install_referrer.dart';
 import 'package:webview/app/screens/home/home.dart';
 
 class HomeController extends GetxController {
@@ -23,6 +23,7 @@ class HomeController extends GetxController {
     await getSimCountryCode();
     await getAnalyticsId();
     await getTokenAndSubscribe();
+    state.isLoading.value = false;
     update();
   }
 
@@ -49,9 +50,10 @@ class HomeController extends GetxController {
 
   Future<String?> getInstallReferrer() async {
     try {
-      var referrer = InstallReferrer.referrer;
 
-      return state.installReferrer.value = await referrer.then((value) => value.name);
+      ReferrerDetails referrerDetails = await AndroidPlayInstallReferrer.installReferrer;
+
+      return state.installReferrer.value = referrerDetails.installReferrer ?? 'Failed to get InstallReferrer';
     } catch (e) {
       return state.installReferrer.value = 'Failed to get InstallReferrer';
     }
@@ -82,8 +84,7 @@ class HomeController extends GetxController {
         state.isSubscribed.value = true;
       }
 
-      debugPrint('token ${await FirebaseMessaging.instance.getToken()}');
-
+      update();
       return state.messagingToken.value = (await FirebaseMessaging.instance.getToken())!;
     } catch (e) {
       return state.messagingToken.value = 'Failed to get Messaging Token';

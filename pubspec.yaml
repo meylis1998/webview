@@ -38,11 +38,11 @@ dependencies:
   get: ^4.6.6
   advertising_id: ^2.6.0
   flutter_inappwebview: ^6.0.0
-  install_referrer: ^1.2.1
   device_region: ^1.4.0
   firebase_core: ^2.27.0
   firebase_analytics: ^10.8.9
   firebase_messaging: ^14.7.19
+  android_play_install_referrer: ^0.4.0
 
 dev_dependencies:
   flutter_test:

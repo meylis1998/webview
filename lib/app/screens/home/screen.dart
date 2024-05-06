@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get/get.dart';
 import 'package:webview/app/global/global.dart';
 import 'package:webview/app/screens/home/home.dart';
@@ -9,9 +8,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<HomeController>(
+    return GetX<HomeController>(
       init: HomeController(),
-      global: true,
       builder: (hc) {
         return Scaffold(
           backgroundColor: Colors.white,
@@ -63,115 +61,81 @@ class HomeScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'GAID:',
+                              'Array [gaid] => ${hc.state.advertisingId.value}',
                               style: Get.textTheme.bodyMedium?.copyWith(
-                                fontSize: 11,
-                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
                               ),
                             ),
                             Text(
-                              hc.state.advertisingId.value,
+                              'ReferrerDetails(installReferrer)=${hc.state.installReferrer.value}',
                               style: Get.textTheme.bodyMedium?.copyWith(
-                                fontSize: 11,
+                                fontSize: 15,
                               ),
                             ),
                             Text(
-                              'Install Referrer:',
+                              '[country code] => ${hc.state.simCountryCode.value}',
                               style: Get.textTheme.bodyMedium?.copyWith(
-                                fontSize: 11,
-                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
                               ),
                             ),
                             Text(
-                              hc.state.installReferrer.value,
+                              '[analytics id] => ${hc.state.firebaseAnalyticsID.value}',
                               style: Get.textTheme.bodyMedium?.copyWith(
-                                fontSize: 11,
+                                fontSize: 15,
                               ),
                             ),
                             Text(
-                              'SIM Country Code:',
+                              '[fcm_token] => ${hc.state.messagingToken.value}',
                               style: Get.textTheme.bodyMedium?.copyWith(
-                                fontSize: 11,
-                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
                               ),
                             ),
-                            Text(
-                              hc.state.simCountryCode.value.toUpperCase(),
-                              style: Get.textTheme.bodyMedium?.copyWith(
-                                fontSize: 11,
-                              ),
-                            ),
-                            Text(
-                              'Analytics ID:',
-                              style: Get.textTheme.bodyMedium?.copyWith(
-                                fontSize: 11,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text(
-                              hc.state.firebaseAnalyticsID.value,
-                              style: Get.textTheme.bodyMedium?.copyWith(
-                                fontSize: 11,
-                              ),
-                            ),
-                            Text(
-                              'Messaging Token:',
-                              style: Get.textTheme.bodyMedium?.copyWith(
-                                fontSize: 11,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text(
-                              hc.state.messagingToken.value,
-                              style: Get.textTheme.bodyMedium?.copyWith(
-                                fontSize: 11,
-                              ),
-                            ),
-                            Text(
-                              'WebView:',
-                              style: Get.textTheme.bodyMedium?.copyWith(
-                                fontSize: 11,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
+                            // Text(
+                            //   'WebView:',
+                            //   style: Get.textTheme.bodyMedium?.copyWith(
+                            //     fontSize: 11,
+                            //     fontWeight: FontWeight.bold,
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),
-                      Positioned(
-                        top: 220,
-                        left: 10,
-                        right: 10,
-                        child: hc.state.progress < 1.0
-                            ? LinearProgressIndicator(
-                                backgroundColor: Colors.grey,
-                                valueColor: const AlwaysStoppedAnimation(Colors.deepPurple),
-                                value: hc.state.progress.value,
-                                minHeight: 6,
-                              )
-                            : Container(),
-                      ),
-                      Positioned(
-                        bottom: 10,
-                        left: 10,
-                        right: 10,
-                        child: SizedBox(
-                          height: MediaQuery.of(context).size.height / 1.7,
-                          child: InAppWebView(
-                            initialUrlRequest: URLRequest(
-                              url: WebUri(hc.state.url),
-                              method: 'GET',
-                            ),
-                            onProgressChanged: (controller, progress) async {
-                              hc.state.progress.value = progress / 100;
-                              hc.update();
-                            },
-                            onWebViewCreated: (controller) {
-                              hc.webViewController = controller;
-                            },
-                            initialSettings: hc.settings,
-                          ),
-                        ),
-                      ),
+
+                      // This is webview with loader
+                      // Positioned(
+                      //   top: 240,
+                      //   left: 10,
+                      //   right: 10,
+                      //   child: hc.state.progress < 1.0
+                      //       ? LinearProgressIndicator(
+                      //           backgroundColor: Colors.grey,
+                      //           valueColor: const AlwaysStoppedAnimation(Colors.deepPurple),
+                      //           value: hc.state.progress.value,
+                      //           minHeight: 6,
+                      //         )
+                      //       : Container(),
+                      // ),
+                      // Positioned(
+                      //   bottom: -5,
+                      //   left: 10,
+                      //   right: 10,
+                      //   child: SizedBox(
+                      //     height: MediaQuery.of(context).size.height / 1.7,
+                      //     child: InAppWebView(
+                      //       initialUrlRequest: URLRequest(
+                      //         url: WebUri(hc.state.url),
+                      //       ),
+                      //       onProgressChanged: (controller, progress) async {
+                      //         hc.state.progress.value = progress / 100;
+                      //         hc.update();
+                      //       },
+                      //       onWebViewCreated: (controller) {
+                      //         hc.webViewController = controller;
+                      //       },
+                      //       initialSettings: hc.settings,
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
           ),

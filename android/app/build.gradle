@@ -66,5 +66,7 @@ flutter {
 
 dependencies {
     implementation 'com.android.support:multidex:2.0.1'
+    implementation platform('com.google.firebase:firebase-bom:32.8.0')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation "com.android.installreferrer:installreferrer:2.2"
 }

@@ -61,35 +61,37 @@ class HomeScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Array [gaid] => ${hc.state.advertisingId.value}',
+                              '[ПушТокен] => ${hc.state.messagingToken.value}',
                               style: Get.textTheme.bodyMedium?.copyWith(
                                 fontSize: 15,
                               ),
                             ),
                             Text(
-                              'ReferrerDetails(installReferrer)=${hc.state.installReferrer.value}',
+                              '[Фаербейс Айди токен] => ${hc.state.firebaseAnalyticsID.value}',
+                              style: Get.textTheme.bodyMedium?.copyWith(
+                                fontSize: 15,
+                              ),
+                            ),
+
+                            Text(
+                              '[Симкарта] => ${hc.state.simCountryCode.value}',
                               style: Get.textTheme.bodyMedium?.copyWith(
                                 fontSize: 15,
                               ),
                             ),
                             Text(
-                              '[country code] => ${hc.state.simCountryCode.value}',
+                              '[Инсталл Реферрер] => ${hc.state.installReferrer.value}',
                               style: Get.textTheme.bodyMedium?.copyWith(
                                 fontSize: 15,
                               ),
                             ),
                             Text(
-                              '[analytics id] => ${hc.state.firebaseAnalyticsID.value}',
+                              '[Рекламный Гугл Индификатор] => ${hc.state.advertisingId.value}',
                               style: Get.textTheme.bodyMedium?.copyWith(
                                 fontSize: 15,
                               ),
                             ),
-                            Text(
-                              '[fcm_token] => ${hc.state.messagingToken.value}',
-                              style: Get.textTheme.bodyMedium?.copyWith(
-                                fontSize: 15,
-                              ),
-                            ),
+
                             // Text(
                             //   'WebView:',
                             //   style: Get.textTheme.bodyMedium?.copyWith(

@@ -13,39 +13,6 @@ class HomeScreen extends StatelessWidget {
       builder: (hc) {
         return Scaffold(
           backgroundColor: Colors.white,
-          appBar: AppBar(
-            actions: [
-              IconButton(
-                onPressed: () {
-                  hc.webViewController!.reload();
-                },
-                color: Colors.white,
-                icon: const Icon(Icons.replay_outlined),
-              ),
-              IconButton(
-                onPressed: () {
-                  hc.webViewController!.goBack();
-                },
-                color: Colors.white,
-                icon: const Icon(Icons.arrow_back),
-              ),
-              IconButton(
-                onPressed: () {
-                  hc.webViewController!.goForward();
-                },
-                color: Colors.white,
-                icon: const Icon(Icons.arrow_forward),
-              ),
-            ],
-            backgroundColor: Colors.deepPurple,
-            title: Text(
-              'Webview App',
-              style: Get.textTheme.bodyMedium?.copyWith(
-                fontSize: 25,
-                color: Colors.white,
-              ),
-            ),
-          ),
           body: Container(
             margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             alignment: Alignment.centerLeft,
@@ -54,39 +21,39 @@ class HomeScreen extends StatelessWidget {
                 : Stack(
                     children: [
                       Positioned(
-                        top: 10,
+                        top: 60,
                         left: 10,
                         right: 10,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              '[ПушТокен] => ${hc.state.messagingToken.value}',
+                              'FCM Token => ${hc.state.messagingToken.value}',
                               style: Get.textTheme.bodyMedium?.copyWith(
                                 fontSize: 15,
                               ),
                             ),
                             Text(
-                              '[Фаербейс Айди токен] => ${hc.state.firebaseAnalyticsID.value}',
+                              'Firebase Analytics ID => ${hc.state.firebaseAnalyticsID.value}',
                               style: Get.textTheme.bodyMedium?.copyWith(
                                 fontSize: 15,
                               ),
                             ),
 
                             Text(
-                              '[Симкарта] => ${hc.state.simCountryCode.value}',
+                              'SIM Card => ${hc.state.simCountryCode.value}',
                               style: Get.textTheme.bodyMedium?.copyWith(
                                 fontSize: 15,
                               ),
                             ),
                             Text(
-                              '[Инсталл Реферрер] => ${hc.state.installReferrer.value}',
+                              'Install Referrer => ${hc.state.installReferrer.value}',
                               style: Get.textTheme.bodyMedium?.copyWith(
                                 fontSize: 15,
                               ),
                             ),
                             Text(
-                              '[Рекламный Гугл Индификатор] => ${hc.state.advertisingId.value}',
+                              'Advertising ID => ${hc.state.advertisingId.value}',
                               style: Get.textTheme.bodyMedium?.copyWith(
                                 fontSize: 15,
                               ),
